@@ -2,7 +2,7 @@ name: Using Schedule event trigger with CRON
 
 on:
   schedule:
-    - cron: "*/30 * * * 6"
+    - cron: "*/1 * * * *"
 
 jobs:
   hello_world:
