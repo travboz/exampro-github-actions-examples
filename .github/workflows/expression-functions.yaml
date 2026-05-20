@@ -28,7 +28,7 @@ jobs:
         run: echo "The string ends with 'ld'."
 
       - name: Format and echo string
-        run: echo $ {{ format('Hello {0} {1} {2}', 'Travis', 'the', 'Engineer') }}
+        run: echo ${{ format('Hello {0} {1} {2}', 'Travis', 'the', 'Engineer') }}
 
       - name: Join issue labels
         if: github.event_name == 'issues'
