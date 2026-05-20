@@ -13,4 +13,4 @@ jobs:
 
       - name: Print out the event type that triggered the workflow
         run: |
-          echo 'Event type trigger: $GITHUB_EVENT_NAME'
+          echo "Event type trigger: $GITHUB_EVENT_NAME"
