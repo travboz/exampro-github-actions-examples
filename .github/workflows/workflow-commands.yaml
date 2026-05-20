@@ -1,0 +1,23 @@
+name: Workflow commands (GITHUB_ENV, GITHUB_OUTPUT, ::debug::, ::group::, ::error ::, etc)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  wcommands:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set output
+        id: example_step # Note the 'id' here. We MUST set an id in order to use outputs.
+        run: echo "name=Travis" >> $GITHUB_OUTPUT
+
+      - name: Group log messages
+        run: |
+          echo "::group::My Grouped Messages"
+          echo "Message 1"
+          echo "Message 2"
+          echo "::endgroup::"
+
+      - name: Use output
+        run: echo "The output was ${{ steps.example_step.outputs.name }}"
