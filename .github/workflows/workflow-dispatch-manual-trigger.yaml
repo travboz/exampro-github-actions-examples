@@ -1,4 +1,4 @@
-name: Manual Trigger with Params
+name: Manually trigger workflows with inputs
 
 on:
   workflow_dispatch:
@@ -8,8 +8,9 @@ on:
         required: true
         type: string
       greeting:
-        description: "Type of greeting"
-        required: true
+        description: "The greeting used to greet the person"
+        required: false
+        default: "Hello"
         type: string
       data:
         description: "Base64 encoded content of a file"
@@ -20,13 +21,15 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-      - name: Decode File Content
-        run: |
-          echo "${{ inputs.data }}" | base64 --decode > ./decoded_file.txt
-      - name: Display Greeting
+      - name: Print the greeting
         run: |
           echo "${{ inputs.greeting }}, ${{ inputs.name }}!"
-      - name: Display File Content
+
+      - name: Decode the file contents
+        run: |
+          echo "${{ inputs.data }}" | base64 --decode > ./decoded_file.txt
+
+      - name: Display file contents
         run: |
           echo "Contents of the file:"
           cat ./decoded_file.txt
