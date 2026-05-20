@@ -1,0 +1,22 @@
+name: Conditionally running by using 'if'
+
+on:
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  hello_world:
+    # if: github.repository == 'travboz/exampro-github-actions-examples'
+    if: github.repository == 'travboz/go-github-actions-examples'
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Hello World!"
+        run: echo "Hello World!"
+
+  goodbye_moon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Goodbye Moon!"
+        run: echo "Goodbye Moon!"
