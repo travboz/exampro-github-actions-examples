@@ -1,0 +1,7 @@
+version: "3"
+
+tasks:
+  trigger-webhook:
+    desc: Trigger the repository_dispatch workflow in the repo
+    cmds:
+      - ./webhook-trigger.sh

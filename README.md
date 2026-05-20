@@ -1,11 +1,21 @@
-## Manual Trigger using endpoint
+# GitHub Actions Demo Repo
+
+This repo is used to explore and follow along with:
+
+[GitHub Actions FreeCodeCamp](https://www.youtube.com/watch?v=Tz7FsunBbfQ)
+
+as a means of attaining the GitHub Actions Certification.
+
+## Script library for reference:
+
+### Manual Trigger using endpoint
 
 ```sh
 gh workflow run workflow-dispatch-manual-trigger.yaml -f name=Travis -f greeting=Hello -F data=@mydata
 echo '{"name":"Travis", "greeting":"Hello"}' | gh workflow run workflow-dispatch-manual-trigger.yaml --json
 ```
 
-## Webhook Event
+### Webhook Event
  
 ```sh
 curl -X POST \
