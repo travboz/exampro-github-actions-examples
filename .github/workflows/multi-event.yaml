@@ -1,0 +1,25 @@
+name: Trigger a workflow on multiple event types
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  hello_world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print out some basic information
+        # $GITHUB_REF: The branch or tag that triggered the workflow run
+        # $GITHUB_JOB: The job_id of the current job
+        # $GITHUB_ACTION: Name of the action currently running
+        # $GITHUB_ACTOR: Name of the person or app that initiated the workflow
+        # $GITHUB_EVENT_NAME: The name of the event that triggered the workflow. For example, workflow_dispatch.
+        run: |
+          echo "Ref: $GITHUB_REF"
+          echo "Job id: $GITHUB_JOB"
+          echo "Action: $GITHUB_ACTION"
+          echo "Actor: $GITHUB_ACTOR"
+          echo "Event: $GITHUB_EVENT_NAME"
