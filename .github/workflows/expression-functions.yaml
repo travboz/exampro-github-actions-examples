@@ -45,7 +45,7 @@ jobs:
 
       - name: Hash files
         run: |
-          echo "Hash of files: ${{ hashFiles('../../README.md', '../../mydata') }}"
+          echo "Hash of files: ${{ hashFiles('**/package-lock.json', '**/Gemfile.lock') }}"
 
       - name: The job has succeeded
         if: ${{ success() }}
