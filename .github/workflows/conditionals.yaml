@@ -8,8 +8,8 @@ on:
 
 jobs:
   hello_world:
-    # if: github.repository == 'travboz/exampro-github-actions-examples'
-    if: github.repository == 'travboz/go-github-actions-examples'
+    if: github.repository == 'travboz/exampro-github-actions-examples'
+    # if: github.repository == 'travboz/go-github-actions-examples'
     runs-on: ubuntu-latest
     steps:
       - name: "Hello World!"
