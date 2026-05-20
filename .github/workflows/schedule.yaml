@@ -2,13 +2,13 @@ name: Using Schedule event trigger with CRON
 
 on:
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "*/5 * * * *" # Run every 5 minutes (Hour/5)
 
 jobs:
   hello_world:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Echo current time
+      - name: Print the current time
         run: |
           echo "The current server time is $(date)"
