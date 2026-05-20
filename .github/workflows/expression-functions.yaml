@@ -16,15 +16,15 @@ jobs:
 
     steps:
       - name: Check if a string contains a substring
-        if: contains("Hello world", "llo")
+        if: contains('Hello world', 'llo')
         run: echo "The string contains the substring."
 
       - name: Check if string starts with
-        if: startsWith("Hello World", "He")
+        if: startsWith('Hello World', 'He')
         run: echo "The string starts with 'He'."
 
       - name: Check if string ends with
-        if: endsWith("Hello World", "ld")
+        if: endsWith('Hello World', 'ld')
         run: echo "The string ends with 'ld'."
 
       - name: Format and echo string
