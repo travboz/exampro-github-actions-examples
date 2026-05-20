@@ -10,4 +10,4 @@ curl -X POST \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $API_TOKEN" \
   https://api.github.com/repos/travboz/exampro-github-actions-examples/dispatches \
-  -d '{"event_type": "", "client_payload": {"name": "Travis"}}'
+  -d '{"event_type": "trigger-workflow", "client_payload": {"name": "Travis"}}'
