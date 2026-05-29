@@ -18,7 +18,7 @@ on:
         type: string
 
 jobs:
-  greet:
+  greet-and-encode:
     runs-on: ubuntu-latest
     steps:
       - name: Encode our super secret word

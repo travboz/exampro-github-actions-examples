@@ -1,0 +1,17 @@
+name: Webhook event triggers
+run-name: ${{ github.actor }} is triggering workflows using ${{ github.event_name}}
+
+on:
+  repository_dispatch:
+    types: [webhook]
+
+jobs:
+  respond-to-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Run a script
+        run: |
+          echo "Event of type: ${{ github.event_name}}"
