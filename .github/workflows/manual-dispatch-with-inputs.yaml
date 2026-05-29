@@ -21,13 +21,17 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-      - name: Decode File Content
+      - name: Encode our super secret word
         run: |
-          echo "${{ inputs.secret-word }}" | base64 --decode > ./decoded_file.txt
+          ENCODED=$(echo "${{ inputs.secret-word }}" | base64)
+          echo "SECRET_WORD=$ENCODED" >> "$GITHUB_ENV"
       - name: Display Greeting
         run: |
           echo "${{ inputs.greeting }}, ${{ inputs.name }}!"
-      - name: Display File Content
+      - name: Display the super secret word after encoding
         run: |
-          echo "Contents of the file:"
-          cat ./decoded_file.txt
+          echo "Super secret word encoding:"
+          echo "Encoded super secret word is: $SECRET_WORD"
+      - name: Decode super secret word
+        run: |
+          echo "$SECRET_WORD" | base64 --decode
