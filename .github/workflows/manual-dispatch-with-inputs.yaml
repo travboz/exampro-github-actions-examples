@@ -1,0 +1,33 @@
+name: Manually triggering workflows (with input parameters)
+run-name: ${{ github.actor }} is running this manual '${{ github.event_name }}' event trigger workflow!
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Name of the person to greet"
+        required: true
+        type: string
+      greeting:
+        description: "Type of greeting"
+        required: true
+        type: string
+      secret-word:
+        description: "Super secret word which we are going to encrypt"
+        required: false
+        type: string
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Decode File Content
+        run: |
+          echo "${{ inputs.secret-word }}" | base64 --decode > ./decoded_file.txt
+      - name: Display Greeting
+        run: |
+          echo "${{ inputs.greeting }}, ${{ inputs.name }}!"
+      - name: Display File Content
+        run: |
+          echo "Contents of the file:"
+          cat ./decoded_file.txt

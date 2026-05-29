@@ -44,3 +44,66 @@ https://api.github.com/repos/{owner}/{repo}/dispatches
 | `always()` | Always returns `true`, even if cancelled |
 | `cancelled()` | Returns `true` if the workflow was cancelled |
 | `failure()` | Returns `true` when any previous step of a job fails |
+
+### Single trigger vs. Multiple trigger events
+
+If we there are **multiple event triggers** in a workflow then, if any of those events are triggered, a workflow run starts for that trigger.
+
+<blockquote>So, we could have <strong>multiple workflows</strong> running at once.</blockquote>
+
+#### If we have a `single` trigger: example
+
+```yaml
+name: CI on Single **Event**
+
+on:
+    push:
+        branches: [ main ]
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository code
+              uses: actions/checkout@v6
+            
+            - name: Run echo to say hello
+              run: echo "Hello, ${{ github.actor }}"
+```
+
+We have only **one** trigger: a **push** to the **main** branch of the repo.
+
+#### If we have `multiple` triggers: example
+
+```yaml
+name: CI on Multiple Events
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+    release:
+        types:
+            - published
+            - created
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository code
+              uses: actions/checkout@v6
+```
+
+We have **three** triggers:
+
+1. a **push** to **main**
+2. a **pull request** into **main**
+3. a **release** of the code with types **published** and **created**
+
+If **ANY** of these triggers were to occur simultaneously then:
+
+- **MULTIPLE** workflow runs would occur.
