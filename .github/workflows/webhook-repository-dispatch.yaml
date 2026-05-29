@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is triggering workflows using ${{ github.event_nam
 
 on:
   repository_dispatch:
-    types: [webhook]
+    types: [pizza]
 
 jobs:
   respond-to-dispatch:
