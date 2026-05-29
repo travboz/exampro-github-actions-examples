@@ -1,0 +1,15 @@
+name: Hello World workflow for Actions!
+run-name: ${{ github.actor }} is running this Hello World workflow!
+
+on:
+  push: # runs on any push to main branch
+    branches: [main]
+  workflow_dispatch: # runs when we manually choose to
+
+jobs:
+  hello_world:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say hello to the world
+        run: |
+          echo "Hello, World! from ${{ github.actor }}."
