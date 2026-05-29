@@ -1,0 +1,21 @@
+name: Conditionals in Actions
+run-name: ${{ github.actor }} is evaluating conditionals...!
+
+on:
+  workflow_dispatch:
+
+jobs:
+  welcome-if-noob:
+    if: github.repository == 'travboz/some-repo-i-dont-have'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome the Noob
+        run: |
+          echo "Welcome fellow Noob. Welcome!"
+
+  welcome-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Welcome all the world
+        run: |
+          echo "Hello there, World! Welcome to all! :)"

@@ -9,8 +9,10 @@ if [ -z "$API_KEY" ]; then
   echo
 fi
 
+echo "The workflow is looking for a repository_dispatch with an [event_type] = \"pizza\"."
+
 curl --request POST \
     --url "$ENDPOINT" \
     --header "Accept: application/vnd.github+json" \
-    --header "Authorization: Bearer $API_KEY" \
+    --header "Authorization: token $API_KEY" \
     --data '{"event_type": "pizza", "client_payload": {"name": "Travis"}}'

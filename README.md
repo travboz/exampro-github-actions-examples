@@ -131,19 +131,37 @@ https://api.github.com/repos/{owner}/{repo}/dispatches
 
 When triggering a `workflow_dispatch` or `repository_dispatch`, we're essentially telling GitHub to **create a new workflow run** on the repository.
 
-This workflow run is considered a write operation — because we're modifying the state of the repository's Actions by adding a new run to it.
+So, add these permissions to a PAT token:
 
-GitHub's permission model treats this as:
-
-- **Actions: Write** — because we're creating/triggering a workflow run, not just reading existing ones
-- **Contents: Read** — because when the workflow fires, GitHub needs to read the workflow `.yml` file from the repository to know what to execute
-
-To summarise, add these permissions to a PAT token:
-
->- Actions: **Read** and **Write** — to trigger workflow runs
->- Contents: **Read-only** — to read the workflow .yml file
+>- Actions: **Read** and **Write**
+>- Contents: **Read** and **Write**
 
 ![Permissions required on a PAT for workflow_dispatch and repository_dispatch](perms-dispatch-requirements.png)
+
+## Conditionals
+
+We can use:
+
+```yaml
+jobs:
+  build:
+    if: github.repository == 'travboz/exampro-github-actions-examples'
+    runs-on: ubuntu-latest
+    steps:
+      - name: True - so say hello
+        run: |
+          echo "Hello ${{ github.actor }}"
+```
+
+the conditional `if: github.repository == 'travboz/exampro-github-actions-examples'` to run a job if/if-not a statement is true or false.
+
+Just be aware that to `negate` or reverse a conditional, we do:
+
+`if: ${{ !(github.repository == 'travboz/exampro-github-actions-examples') }}`
+
+We can also use `!=` as well. See [expressions](https://docs.github.com/en/actions/reference/workflows-and-actions/expressions) in the docs.
+
+![ExamPro slide on conditionals](conditionals.png)
 
 ## Expressions for reference:
 
