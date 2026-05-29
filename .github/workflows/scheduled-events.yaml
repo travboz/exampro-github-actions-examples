@@ -21,13 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print the time that this workflow ran
-        run: "Running the 'scheduled' workflow now: $(date)"
+        run: |
+          echo "Running the 'scheduled' workflow now: $(date)"
 
       - name: Run this only on the Thursday run
         if: github.event.schedule == '*/30 * * * 4' # check if this is a 30 minute time on a Thursday.
         run: |
           echo "It's Thursday!"
-          echo "The current Thursday time is $(date)"
+          echo "The current Thursday time is: $(date)"
 
       - name: Run this whole scheduled workflow by using the manual trigger
         if: github.event_name == 'workflow_dispatch'
