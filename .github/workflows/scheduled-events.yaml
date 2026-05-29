@@ -1,0 +1,37 @@
+name: Running a 'scheduled' event using a CRON expression
+run-name: ${{ github.actor }} is running this 'scheduled' event trigger workflow!
+
+on:
+  schedule:
+    # need to have these schedules defined in order to use them in the conditionals down below - otherwise it won't work.
+    - cron: "*/30 * * * 1"
+    - cron: "*/30 * * * 2"
+    - cron: "*/30 * * * 4"
+    - cron: "*/30 * * * 5"
+  # So, this workflow runs EVERY:
+  #   - 30 minutes, on Mondays
+  #   - 30 minutes, on Tuesdays
+  #   - 30 minutes, on Thursdays
+  #   - 30 minutes, on a Friday
+
+  workflow_dispatch: # set this trigger for testing purposes only
+
+jobs:
+  scheduled-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the time that this workflow ran
+        run: "Running the 'scheduled' workflow now: [ $(date) ]"
+
+      - name: Run this only on the Thursday run
+        if: github.event.schedule == '*/30 * * * 4' # check if this is a 30 minute time on a Thursday.
+        run: |
+          echo "It's Thursday!"
+          echo "The current Thursday time is [ $(date) ]"
+
+      - name: Run this whole scheduled workflow by using the manual trigger
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "This was manually triggered using ${{ github.event_name }}"
+          echo "The other steps will still run because this whole workflow was originally intended to be run a schedule, but now we've manually triggered it"
+          echo "However, the Thursday schedule conditional will not run because github.event.schedule is empty (because we used the trigger)."
