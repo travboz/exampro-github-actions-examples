@@ -1,0 +1,17 @@
+name: Using GITHUB_ENV to make variables available in later steps
+run-name: ${{ github.actor }} is using GITHUB_ENV variables
+
+on:
+  workflow_dispatch:
+
+jobs:
+  using-variables:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set the environment variable
+        run: echo "ACTIONS_ENV=production" >> $GITHUB_ENV
+
+      - name: Using the environment variable
+        run: |
+          echo "$ACTIONS_ENV"
