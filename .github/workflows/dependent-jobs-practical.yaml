@@ -1,0 +1,33 @@
+name: Build, Test, and Deploy Workflow to show dependencies amongst jobs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    needs: [build, test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Deploy application
+        run: echo "Deploying to production..."
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Build application
+        run: echo "Building the application..."
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Test application
+        run: echo "Running tests..."
