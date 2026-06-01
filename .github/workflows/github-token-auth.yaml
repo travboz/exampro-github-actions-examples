@@ -1,0 +1,49 @@
+name: Using GITHUB_TOKEN in a Workflow
+run-name: ${{ github.actor }} is using their token for auth actions
+
+on:
+  workflow_dispatch:
+    inputs:
+      runGhCliJob:
+        description: "Whether to run the GitHub CLI job in this work"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  gh-cli-open-issue:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.runGhCliJob }} # I don't really want to run this, so have added an input
+    # Modifying permissions at the JOB LEVEL
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Using our GITHUB_TOKEN to open a new issue (requires authentication)
+        run: |
+          gh issue --repo ${{ github.repository }} \
+            create --title "Issue title" --body "Issue body"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # The GitHub CLI requires the GH_TOKEN variable to be set - and so we set it
+          # using env vars and accessing the GITHUB_TOKEN from the secrets context.
+
+  api-request-commit-issue:
+    runs-on: ubuntu-latest
+    # Modifying permissions at the JOB LEVEL
+    permissions:
+      issues: write
+
+    steps:
+      - name: Create an issue on a commit using the GitHub REST API
+        run: |
+          curl --request POST \
+           --url https://api.github.com/repos/${{ github.repository }}/issues \
+           --header 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+           --header 'Content-Type: application/json' \
+           --data '{
+             "title": "Automated issue for commit: ${{ github.sha }}",
+             "body": "This issue was automatically created by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_."
+             }' \
+           --fail
