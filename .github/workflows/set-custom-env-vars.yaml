@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: "Say Hello ${{ github.actor }}, it's Monday!"
         run: |
-          echo "$Greeting $First_Name". Today is $DAY_OF_WEEK!"
+          echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
         # Step-level: only usable IN THIS STEP only
         env:
           First_Name: Travis
