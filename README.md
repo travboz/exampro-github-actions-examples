@@ -615,3 +615,35 @@ Common real-world uses:
 - Masking a dynamically fetched token that isn't stored as a secret
 - Masking a derived or computed value that contains sensitive data
 - Preventing accidental exposure of sensitive values echoed during debugging
+
+## Workflow Contexts
+
+These are all `objects` that we use to **access information** about:
+
+- workflow runs
+- variables
+- runner environments
+- jobs
+- steps
+- etc.
+
+We can access a context using expression syntax: `${{ <some_context> }}`
+
+Example:
+
+```yaml
+name: CI
+on: push
+jobs:
+  prod-check:
+    if: ${{ github.ref == 'refs/heads/main' }} # we're access the 'github' context here
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying to production server on branch $GITHUB_REF"
+
+```
+
+the `if` statement checks the `github` context's `ref` property to determine the current branch name.
+
+See the [contexts reference](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts) page in the docs for an exhaustive list of available contexts.
+

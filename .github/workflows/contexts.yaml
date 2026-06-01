@@ -1,0 +1,23 @@
+name: Context Examples
+
+on: [push]
+
+jobs:
+  my-context:
+    runs-on: ubuntu-latest
+    env:
+      USERNAME: ${{ github.actor }}
+    steps:
+      - name: My step
+        run: |
+          echo "Hello! The action currently running is: [ ${{ github.action }} ]"
+
+      - name: Who run the action?
+        run: |
+          echo "The action was run by [ $USERNAME ]"
+
+      - name: What event triggered the action?
+        run: |
+          echo "The event that triggered the action was: [ $TRIGGERING_EVENT ]"
+        env:
+          TRIGGERING_EVENT: ${{ github.event_name }}
