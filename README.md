@@ -647,3 +647,10 @@ the `if` statement checks the `github` context's `ref` property to determine the
 
 See the [contexts reference](https://docs.github.com/en/actions/reference/workflows-and-actions/contexts) page in the docs for an exhaustive list of available contexts.
 
+## What is the `default` retention period for build logs and artifacts?
+
+90 days
+
+## Can the retention period of build logs and artifacts be customised?
+
+Yes!
