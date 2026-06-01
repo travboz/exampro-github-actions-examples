@@ -8,7 +8,7 @@ jobs:
     env:
       USERNAME: ${{ github.actor }}
     steps:
-      - name: My step
+      - name: What action is currently running?
         run: |
           echo "Hello! The action currently running is: [ ${{ github.action }} ]"
 
@@ -21,3 +21,7 @@ jobs:
           echo "The event that triggered the action was: [ $TRIGGERING_EVENT ]"
         env:
           TRIGGERING_EVENT: ${{ github.event_name }}
+
+      - name: What did the event payload look like?
+        run: |
+          echo "The event payload: [ ${{ github.event }} ]"
