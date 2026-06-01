@@ -23,7 +23,6 @@ We have `job2` which **waits** for `job1` to finish because it ***depends*** on 
 
 The key thing to notice:
 
-`job3` has two incoming edges — it can't start until both `job1` and `job2` complete. 
+`job3` has two incoming edges — it can't start until both `job1` and `job2` complete.
 Since `job2` itself depends on `job1`, the effective execution order is strictly sequential: `job1` → `job2` → `job3`. There's no parallelism in this particular config.
 If `job3` only needed `job1` (dropping the `job2` dependency), then `job2` and `job3` could run in parallel after job1 finishes.
-
