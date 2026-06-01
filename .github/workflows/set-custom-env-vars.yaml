@@ -28,4 +28,4 @@ jobs:
           echo "$Greeting $First_Name. Today is $DAY_OF_WEEK, it is NOT Tuesday!"
         env:
           First_Name: Pablo
-          Greeting: "${{ env.GREETING }} and Hola"
+          Greeting: "${{ env.Greeting }} and Hola"
