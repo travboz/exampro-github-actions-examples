@@ -18,3 +18,7 @@ jobs:
 
       - name: Print all variables in the env context
         run: printenv
+
+      - name: Print SHA from environment vars
+        run: |
+          echo "SHA is: $GITHUB_SHA"
