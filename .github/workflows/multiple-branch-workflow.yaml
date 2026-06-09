@@ -1,0 +1,71 @@
+# GitHub Actions workflow demonstrating conditional job execution using 'if' statements and functions
+name: Using conditionals for more complex branch structure (develop, main, feature branches)
+
+# Trigger this workflow on push events to specific branches
+on:
+  push:
+    branches:
+      - main # Production branch
+      - develop # Development branch
+      - feature/** # Feature branches (any branch starting with 'feature/')
+
+jobs:
+  # Job 1: Quality checks - runs only when pushing to feature branches
+  quality_cheks:
+    # Condition: Only run if the branch name starts with 'feature' AND the event is a push
+    if: startsWith(github.ref_name,'feature') && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Perform code quality
+        # Echo a message indicating code quality checks are being performed
+        run: echo "Performing quality checks on the code"
+
+  # Job 2: Development deployment - runs only when pushing to the develop branch
+  dev_deploy:
+    # Condition: Only run if pushing to the 'develop' branch AND the event is a push
+    if: github.ref_name == 'develop' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dev Deploy
+        # Echo a message indicating deployment to development environment
+        run: echo "Deploying the code to development environment"
+
+  # Job 3: Production deployment - runs only when pushing to the main branch
+  prod_deploy:
+    # Condition: Only run if pushing to the 'main' branch AND the event is a push
+    if: github.ref_name == 'main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prod Deploy
+        # Echo a message indicating deployment to production environment
+        run: |
+          echo "Deploying the code to production environment"
+
+      # Uncomment this to test failure_notify
+      # - name: Prod Deploy deliberate fail
+      #   run: exit 1
+
+  # Job 4: Success notification - runs after all previous jobs complete successfully
+  success_notify:
+    # Dependency: Wait for quality_cheks, dev_deploy, and prod_deploy to finish
+    needs: ["quality_cheks", "dev_deploy", "prod_deploy"]
+    # Condition: Run always (even if previous jobs skipped), but only if no jobs failed
+    # The !failure() ensures this runs when all executed jobs succeeded
+    if: always() && !failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Success
+        # Echo a message indicating a success notification was sent
+        run: echo "Success email sent to the team"
+
+  # Job 5: Failure notification - runs only if any previous job failed
+  failure_notify:
+    # Dependency: Wait for quality_cheks, dev_deploy, and prod_deploy to finish
+    needs: ["quality_cheks", "dev_deploy", "prod_deploy"]
+    # Condition: Run only if any of the dependent jobs failed
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Failure
+        # Echo a message indicating a failure notification was sent
+        run: echo "Failure email sent to the team"
