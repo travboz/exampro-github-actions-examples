@@ -1,0 +1,22 @@
+name: Using OR conditional
+
+on:
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run this step if the user that triggered this workflow is Travis or Bob
+        if: ${{ github.actor == 'travboz' || github.actor == 'Bobber01' }}
+        run: |
+          echo "Workflow was triggered by either [travboz] or [Bobber01]"
+
+      - name: Run this step if branch is main (using simple branch naming)
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          echo "branch is ${{ github.ref_name }} and so running this step"
+
+        
+    
