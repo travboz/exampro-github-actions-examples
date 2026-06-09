@@ -1,0 +1,14 @@
+name: Using outputs to persist values
+
+on: workflow_dispatch
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step one
+        id: step1
+        run: echo "version=0.0.1" >> $GITHUB_OUTPUT
+
+      - name: "Step two: fetch output from Step one"
+        run: echo "This version is ${{ steps.step1.outputs.version }}"
