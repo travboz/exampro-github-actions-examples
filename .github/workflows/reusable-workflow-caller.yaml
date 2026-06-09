@@ -1,0 +1,7 @@
+name: "Reusable Workflow: Caller"
+
+on: push
+
+jobs:
+  call-greeting:
+    uses: ./.github/workflows/reusable-workflow.yaml

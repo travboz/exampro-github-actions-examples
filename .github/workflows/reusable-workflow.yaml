@@ -1,0 +1,11 @@
+name: "Reusable Workflow: Callee"
+
+on: workflow_call
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greeting step
+        run: |
+          echo "Welcome to Reusable Workflow"
