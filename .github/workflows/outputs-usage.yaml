@@ -3,7 +3,10 @@ name: Using outputs to persist values
 on: workflow_dispatch
 
 jobs:
-  job1:
+  build:
+    outputs:
+      version: ${{ steps.step1.outputs.version }}
+  
     runs-on: ubuntu-latest
     steps:
       - name: Step one
@@ -12,3 +15,12 @@ jobs:
 
       - name: "Step two: fetch output from Step one"
         run: echo "This version is ${{ steps.step1.outputs.version }}"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: # set a dependency so that `build` job MUST finish first before this job runs
+      - build
+    steps:
+      - name:  Deploy the dummy application
+        run: |
+          echo "We are deploying the app with version ${{ needs.build.outputs.version }}"
