@@ -1,0 +1,20 @@
+name: Using conditionals for step running
+
+on:
+  push:
+    branches: [ main, develop ]
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run this step if branch is main
+        if: ${{ github.ref == 'refs/head/main' }}
+        run: |
+          echo "branch is ${{ github.ref }} and so running this step"
+
+      - name: Run this step always
+        run: |
+          echo "Running this step always"
+        
+    
