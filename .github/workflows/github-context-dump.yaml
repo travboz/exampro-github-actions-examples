@@ -1,0 +1,16 @@
+name: Context variables dump
+run-name: ${{ github.actor }} is inspecting the context object!
+
+on: workflow_dispatch
+
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use context variables
+        run: |
+          echo "This workflow was triggered by ${{ github.actor }}"
+          echo "The repository name is ${{ github.repository }}"
+
+      - name: Print all variables in the github context
+        run: "${{ toJson(github) }}"
