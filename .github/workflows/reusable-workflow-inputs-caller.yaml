@@ -1,0 +1,9 @@
+name: "Reusable Workflow with inputs: Caller"
+
+on: push
+
+jobs:
+  call-greeting:
+    uses: ./.github/workflows/reusable-workflow-inputs.yaml
+    with:
+      name: Travis

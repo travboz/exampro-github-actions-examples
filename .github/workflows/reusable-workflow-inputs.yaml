@@ -1,0 +1,17 @@
+name: "Reusable Workflow with inputs: Callee"
+
+on:
+  workflow_call:
+    inputs:
+      name:
+        description: Name of person to greet
+        required: true
+        type: string
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greeting step
+        run: |
+          echo "Hello there, ${{ inputs.name }}!\nWelcome to this Reusable Workflow."
