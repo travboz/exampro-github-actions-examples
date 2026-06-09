@@ -8,10 +8,16 @@ jobs:
   demo:
     runs-on: ubuntu-latest
     steps:
-      - name: Run this step if branch is main
+      - name: Run this step if branch is main (using complex branch naming)
         if: ${{ github.ref == 'refs/head/main' }}
         run: |
           echo "branch is ${{ github.ref }} and so running this step"
+
+      - name: Run this step if branch is main (using simple branch naming)
+        if: ${{ github.ref_name == 'main' }}
+        run: |
+          echo "branch is ${{ github.ref_name }} and so running this step"
+
 
       - name: Run this step always
         run: |
