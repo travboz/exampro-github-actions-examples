@@ -1,5 +1,7 @@
 name: Build and Deploy
 on:
+  push:
+    branches: main
   pull_request:
     types: 
       - opened
@@ -8,7 +10,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # if we're creating a pull request, and if that pull request is into main. 
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'main' }}
     steps:
       - name: Build step
         run: |
           echo "Building the application"
+
+  deploy:
+    runs-on: ubuntu-latest
+    # if we're pushing, and the push target is into main.
+    if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+    steps:
+      - name: Deploy step
+        run: echo "Deploying the app"
